@@ -8,5 +8,6 @@ A city municipality decided to collect wastes from residential area under its ad
 5. As an individual family, analyze the expense for managing waste. Calculate the amount you are spending towards this.
 Write an Algorithm and implement it using C-Programming for the above-mentioned scenario.
 
-Respective C program is Uploaded :relaxed:!
 [Respective C program is Uploaded :relaxed:!](https://github.com/deepaksaipendyala/waste-management/blob/0bec602303b9be454993244a0c736a5a34198436/main.c)
+
+Feel free to understand and implement in your own way!!
