@@ -19,12 +19,12 @@ if (option==2){
   scanf("%d", &h);
   printf("Please enter the no of days to be calculated:");
   scanf("%d", &d);
+  float degrad[d*h],plastic[d*h],elec[d*h];
   x=h;
   k=0;
   printf("If you want to computes the statistics of the waste collection per area, Please enter 1\n If you want to reward the house which gives less quantity of waste, please enter 2\nIf you want to Compute the total earning for the municipality, please enter 3\nIf you want to know what percentage of the waste is from what category, please enter 4:");
 scanf("%d",&choice);
   for (int f=0;f<area;f++){
-    float degrad[d*h],plastic[d*h],elec[d*h];
     printf("ENTER THE DETAILS IN AREA %d\n",f+1);
     for (int g=0;g<d;g=g+3){
     printf("enter the quantity of degradable waste in kg on day %d\n",g+1);
@@ -204,6 +204,93 @@ return 0;
 }
 
 int customer(){
+int d,j,k,h,x,area;
+area=1;
+h=1;
+x=h;
+printf("Please enter the no of days to be calculated:");
+scanf("%d", &d);
+float degrad[d],plastic[d],elec[d];
+k=0;
+
+for (int g=0;g<d;g=g+3){
+ printf("enter the quantity of degradable waste in kg on day %d\n",g+1);
+j=0;
+  for (int i=k;i<h;i++){
+  printf("Enter quantity in house %d :",j+1);
+  scanf("%f",&degrad[i]);
+  j=j+1;
+}
+k=k+h;
+h=h+h;
+ }
+    k=0;
+    h=x;
+    for(int g=1;g<d;g=g+3){
+    printf("enter the quantity of plastic waste in kg on day %d\n",g+1);
+    j=0;
+    for (int i=k;i<h;i++){
+      printf("Enter quantity in house %d :",j+1);
+      scanf("%f",&plastic[i]);
+      j=j+1;             }
+      k=k+h;
+      h=h+h;
+                      }
+  k=0;
+  h=x;
+  for (int g=2;g<d;g=g+3){
+   printf("enter the quantity of electronic waste in kg on day %d\n",g+1);
+     j=0;
+   for(int i=k;i<h;i++){
+     printf("Enter quantity in house %d:",j+1);
+     scanf("%f",&elec[i]);
+    j=j+1;             }
+  }
+//calculation part
+
+float tdeg,tplas,telec,total,finall;
+int a,b,c;
+tdeg=0;
+x=h;
+k=0;
+
+for (int g=0;g<d;g=g+3){
+  for (int i=k;i<h;i++){
+    a=0;
+    a=degrad[i];
+    a=a*5;
+    tdeg=tdeg+a;
+}
+k=k+h;
+h=h+h;
+ }
+    tplas=0;
+    k=0;
+    h=x;
+    for(int g=1;g<d;g=g+3){
+    for (int i=k;i<h;i++){
+     b=0;
+     b=plastic[i];
+     b=b*10;
+     tplas=tplas+b;    }
+      k=k+h;
+      h=h+h;
+                      }
+  telec=0;
+  k=0;
+  h=x;
+  for (int g=2;g<d;g=g+3){
+   for(int i=k;i<h;i++){
+     c=0;
+     c=elec[i];
+     c=c*15;
+    telec=telec+c; }
+      k=k+h;
+      h=h+h;
+  }
+  total=tdeg+tplas+telec;
+ finall+=total;
+printf("expenditure on waste management for %d days is %.2f upees",d,finall);
 
   return 0;
 }
