@@ -142,7 +142,7 @@ return finall;
 
 int reward(float degrad[],float plastic[],float elec[],int area,int h,int d){
 
-
+printf("this part is under construction and maintainence,please visit us later!");
 
 return 0;
 }
