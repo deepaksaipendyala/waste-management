@@ -3,7 +3,8 @@
 float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
 int reward();
 float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
-int percentage();
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,
+float parr[]);
 int customer();
 
 int main() {
@@ -20,6 +21,7 @@ if (option==2){
   printf("Please enter the no of days to be calculated:");
   scanf("%d", &d);
   float degrad[d*h],plastic[d*h],elec[d*h];
+  float parr[4];
   x=h;
   k=0;
   printf("If you want to computes the statistics of the waste collection per area, Please enter 1\n If you want to reward the house which gives less quantity of waste, please enter 2\nIf you want to Compute the total earning for the municipality, please enter 3\nIf you want to know what percentage of the waste is from what category, please enter 4:");
@@ -68,7 +70,7 @@ if (choice==1){
   result=earn(degrad,plastic,elec,area,x,d,f,finall);
   finall=finall+result;
 }else if (choice==4){
-  percentage(degrad,plastic,elec,area,x,d);
+  percentage(degrad,plastic,elec,area,h,d,f,parr);
 }else printf("wrong input, sorry! run again");
  printf("\n\n\n"); }
 }
@@ -196,12 +198,73 @@ printf("So Finally, Total Earnings of the Municipality for %d days in %d Area/Ar
 return finall;
 }
 
-int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d){
 
 
 
+
+
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float parr[]){
+
+float tdeg,tplas,telec,total,t;
+int a,b,c,g,x,k,j;
+tdeg=0;
+x=h;
+k=0;
+
+    for (int g=0;g<d;g=g+3){
+  for (int i=k;i<h;i++){
+    a=0;
+    a=degrad[i];
+    tdeg=tdeg+a;
+}
+k=k+h;
+h=h+h;
+ }
+    tplas=0;
+    k=0;
+    h=x;
+    for(int g=1;g<d;g=g+3){
+    for (int i=k;i<h;i++){
+     b=0;
+     b=plastic[i];
+     tplas=tplas+b;    }
+      k=k+h;
+      h=h+h;
+                      }
+  telec=0;
+  k=0;
+  h=x;
+  for (int g=2;g<d;g=g+3){
+   for(int i=k;i<h;i++){
+     c=0;
+     c=elec[i];
+    telec=telec+c; }
+      k=k+h;
+      h=h+h;
+  }
+  total=tdeg+tplas+telec;
+parr[0]+=tdeg;
+parr[1]+=tplas;
+parr[2]+=telec;
+parr[3]+=total;
+if(area==f+1){
+parr[0]=(parr[0]/parr[3])*100;
+parr[1]=(parr[1]/parr[3])*100;
+parr[2]=(parr[2]/parr[3])*100;
+printf("total wastage is %.2f KGS\n",parr[3]);
+printf("%.2f %% is from degradable waste category\n",parr[0]);
+printf("%.2f %% is from plastic waste category\n",parr[1]);
+printf("%.2f %% is from electronic waste category\n",parr[2]);
+}
 return 0;
 }
+
+
+
+
+
+
+
 
 int customer(){
 int d,j,k,h,x,area;
