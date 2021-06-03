@@ -3,8 +3,7 @@
 float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
 int reward();
 float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
-int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,
-float parr[]);
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal);
 int customer();
 
 int main() {
@@ -22,6 +21,7 @@ if (option==2){
   scanf("%d", &d);
   float degrad[d*h],plastic[d*h],elec[d*h];
   float parr[4];
+  float td,tp,te,ptotal;
   x=h;
   k=0;
   printf("If you want to computes the statistics of the waste collection per area, Please enter 1\n If you want to reward the house which gives less quantity of waste, please enter 2\nIf you want to Compute the total earning for the municipality, please enter 3\nIf you want to know what percentage of the waste is from what category, please enter 4:");
@@ -70,7 +70,7 @@ if (choice==1){
   result=earn(degrad,plastic,elec,area,x,d,f,finall);
   finall=finall+result;
 }else if (choice==4){
-  percentage(degrad,plastic,elec,area,h,d,f,parr);
+  percentage(degrad,plastic,elec,area,h,d,f,&td,&tp,&te,&ptotal);
 }else printf("wrong input, sorry! run again");
  printf("\n\n\n"); }
 }
@@ -203,7 +203,7 @@ return finall;
 
 
 
-int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float parr[]){
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal){
 
 float tdeg,tplas,telec,total,t;
 int a,b,c,g,x,k,j;
@@ -243,18 +243,18 @@ h=h+h;
       h=h+h;
   }
   total=tdeg+tplas+telec;
-parr[0]+=tdeg;
-parr[1]+=tplas;
-parr[2]+=telec;
-parr[3]+=total;
+*td+=tdeg;
+*tp+=tplas;
+*te+=telec;
+*ptotal+=total;
 if(area==f+1){
-parr[0]=(parr[0]/parr[3])*100;
-parr[1]=(parr[1]/parr[3])*100;
-parr[2]=(parr[2]/parr[3])*100;
-printf("total wastage is %.2f KGS\n",parr[3]);
-printf("%.2f %% is from degradable waste category\n",parr[0]);
-printf("%.2f %% is from plastic waste category\n",parr[1]);
-printf("%.2f %% is from electronic waste category\n",parr[2]);
+*td=(*td / *ptotal)*100;
+*tp=(*tp / *ptotal)*100;
+*te=(*te / *ptotal)*100;
+printf("total wastage is %.2f KGS\n",*ptotal);
+printf("%.2f %% is from degradable waste category\n",*td);
+printf("%.2f %% is from plastic waste category\n",*tp);
+printf("%.2f %% is from electronic waste category\n",*te);
 }
 return 0;
 }
