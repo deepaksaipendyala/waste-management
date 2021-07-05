@@ -9,6 +9,7 @@
 
 ![Flowchart](WM%20.png)
 
+### [To run the Program, Redirect to My Replit!](https://replit.com/@deepaksaip/waste-management)
 [Respective C program is Uploaded :relaxed:!](https://github.com/deepaksaipendyala/waste-management/blob/master/main.c)
 
 Feel free to understand and implement in your own way!!
