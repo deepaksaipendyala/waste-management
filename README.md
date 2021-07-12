@@ -6,7 +6,7 @@
 4. Show us what percentage of the waste is from what category.
 5. As an individual family, analyze the expense for managing waste. Calculate the amount you are spending towards this.
 ### Write an Algorithm and implement it using C-Programming for the above-mentioned scenario.
-### [To run the Program, Redirect to My Replit!](https://replit.com/@deepaksaip/waste-management)
+### [To run the Program, Redirect to My Replit!](https://replit.com/@deepaksaip/waste-management#main.c)
 ![Flowchart](WM%20.png)
 
 [Respective C program is Uploaded here :relaxed:!](https://github.com/deepaksaipendyala/waste-management/blob/master/main.c)

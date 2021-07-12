@@ -4,14 +4,14 @@
 
 Instructions :
 
-1). Enter 1 for functionalities of
+1). Enter 1 for the functionalities of
 
   a). Calculate Average waste
   b). Reward the House which gave lowest waste 
   c). Compute the Earnings of municipality
   d). Check what percentage of the waste is from what category
 
-    Enter 2 for functionality of
+    Enter 2 for the functionality of
 
   a). As an individual family, analyzing the expense for managing the waste
 
@@ -40,7 +40,7 @@ int customer();
 
 int main() {
  int option,choice,h,d,area,x,j,k,i,g;
- int a,b,c,m;
+ int a,b,c;
  float finall=0;
  float result=0;
  printf("Namaskar..! Welcome to Waste Management Calculator\nif you are consumer, please type 1\nif you are from Municipal Authority, please press 2:");
@@ -66,7 +66,7 @@ else if(d%3==0){
     b=c*h;
     c=c*h;     }
 float degrad[a],plastic[b],elec[c];
-float td,tp,te,ptotal;
+float td=0,tp=0,te=0,ptotal=0;
 x=h;
 k=0;
 
@@ -118,7 +118,7 @@ for (int f=0;f<area;f++){
     result=earn(degrad,plastic,elec,area,x,d,f,finall);
     finall=finall+result; }
   else if (choice==4)                                               {
-    percentage(degrad,plastic,elec,area,h,d,f,&td,&tp,&te,&ptotal); }
+    percentage(degrad,plastic,elec,area,x,d,f,&td,&tp,&te,&ptotal); }
   else printf("wrong input, sorry! run again");
 
 printf("\n\n\n");    }
@@ -150,7 +150,7 @@ k=0;
   for (i=k;i<h;i++){
     a=0;
     a=degrad[i];
-    tdeg=tdeg+a;
+    tdeg+=a;
 }
 k=i;
 h=h+x;
@@ -320,7 +320,7 @@ return finall;
 
 int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal){
 
-float tdeg,tplas,telec,total,t;
+float tdeg,tplas,telec,total;
 int a,b,c,g,x,k,j,i;
 tdeg=0;
 x=h;
@@ -356,7 +356,6 @@ for ( g=2;g<d;g=g+3)      {
   k=i;
   h=h+x;
                           }
-
 total=tdeg+tplas+telec;
 *td+=tdeg;
 *tp+=tplas;
@@ -379,26 +378,23 @@ return 0;
 
 
 int customer(){
-int d,j,k,h,x,area,g,i;
-area=1;
-h=1;
-x=h;
+int d,j,k,g,i;
 printf("Please enter the no of days to be calculated:");
 scanf("%d", &d);
-float degrad[d],plastic[d],elec[d];
+float arr[d];
 
 for (g=0;g<d;g=g+3){
    printf("enter the quantity of degradable waste in kg on day %d:",g+1);
-   scanf("%f",&degrad[g]);
+   scanf("%f",&arr[g]);
 }
 
 for(g=1;g<d;g=g+3){
     printf("enter the quantity of plastic waste in kg on day %d:",g+1);
-    scanf("%f",&plastic[g]);
+    scanf("%f",&arr[g]);
  }
   for (g=2;g<d;g=g+3){
     printf("enter the quantity of electronic waste in kg on day %d:",g+1);
-    scanf("%f",&elec[g]);
+    scanf("%f",&arr[g]);
   }
 //calculation part
 
@@ -408,7 +404,7 @@ tdeg=0;
 
 for (g=0;g<d;g=g+3){
      a=0;
-     a=degrad[g];
+     a=arr[g];
      a=a*5;
      tdeg=tdeg+a; }
 
@@ -416,7 +412,7 @@ tplas=0;
 
 for(g=1;g<d;g=g+3){
      b=0;
-     b=plastic[g];
+     b=arr[g];
      b=b*10;
      tplas=tplas+b;  }
 
@@ -424,7 +420,7 @@ telec=0;
 
 for (g=2;g<d;g=g+3){
      c=0;
-     c=elec[g];
+     c=arr[g];
      c=c*15;
     telec=telec+c; }
 
