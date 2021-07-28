@@ -2,43 +2,57 @@
 
 @author deepak sai pendyala
 
-Instructions :
+Instructions: 
 
-1). Enter 1 for the functionalities of
+ 
 
-  a). Calculate Average waste
-  b). Reward the House which gave lowest waste 
-  c). Compute the Earnings of municipality
-  d). Check what percentage of the waste is from what category
+Step 1: Enter 1 for the functionalities of Municipal Authority: 
 
-    Enter 2 for the functionality of
+             Enter 2 for the functionality of consumer: 
 
-  a). As an individual family, analyzing the expense for managing the waste
+Step 2: Enter No of Areas 
 
-2). Enter Option of functionalities
+Step 3: Enter No of Houses 
 
-3). Enter No of Areas
+Step 4: Enter No of days 
 
-4). Enter No of Houses
+Step 5: If Option ‘1’ is chosen in Step 1: 
 
-5). Enter No of days
+           Enter one of the functionalities below: 
 
-6) Enter Data of quantities for individual days and Houses.
+1). Calculate Average waste  
+
+2). Reward the House which gave lowest waste   
+
+3). Compute the Earnings of municipality  
+
+4). Check what percentage of the waste is from what category  
+
+ Else if Option ‘2’ is chosen, the Program will Automatically proceed to functionality of “As an individual family, analyzing the expense for managing the waste” 
+ 
+
+Step 6: Enter Data of quantities for individual days and Houses of different houses. 
+
+Step 7: The program will display the output as per functionalities selected 
+
+Step 8: The Program will create the file named “output.txt” automatically & the output will be saved to it. 
 
 
 */
 #include <stdio.h>
+#include <string.h>
 
+FILE *filePointer ;
 //Function Prototyping
 
-float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
+float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall,int a,int b,int c);
 int reward(float degrad[],float plastic[],float elec[],int area,int h,int d,int a,int b,int c);
-float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall);
-int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal);
+float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,int a,int b,int c);
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal,int a,int b,int c);
 int customer();
 
-
 int main() {
+  filePointer = fopen("output.txt", "a+") ;
  int option,choice,h,d,area,x,j,k,i,g;
  int a,b,c;
  float finall=0;
@@ -103,23 +117,29 @@ for (int f=0;f<area;f++){
     printf("enter the quantity of electronic waste in kg on day %d\n",g+1);
      j=0;
     for(i=k;i<h;i++){
-      printf("Enter quantity in house %d:",j+1);
+      printf("Enter quantity in house %d :",j+1);
       scanf("%f",&elec[i]);
       j=j+1;        }
      k=i;
      h=h+x;              }
 
-  if (choice==1)         {
-    result=avg(degrad,plastic,elec,area,x,d,f,finall);
-    finall=finall+result; }
-  else if (choice==2)                           {
-    reward(degrad,plastic,elec,area,x,d,a,b,c); }
-  else if (choice==3)      {
-    result=earn(degrad,plastic,elec,area,x,d,f,finall);
-    finall=finall+result; }
-  else if (choice==4)                                               {
-    percentage(degrad,plastic,elec,area,x,d,f,&td,&tp,&te,&ptotal); }
-  else printf("wrong input, sorry! run again");
+switch(choice){
+  case 1:
+      finall=avg(degrad,plastic,elec,area,x,d,f,finall,a,b,c);
+      break;
+  case 2:
+      reward(degrad,plastic,elec,area,x,d,a,b,c);
+      break;
+  case 3:
+      earn(degrad,plastic,elec,area,x,d,f,a,b,c);
+      break;
+  case 4:
+      percentage(degrad,plastic,elec,area,x,d,f,&td,&tp,&te,&ptotal,a,b,c);
+      break;
+  default:
+      printf("wrong input, sorry! run again");
+
+}
 
 printf("\n\n\n");    }
 }
@@ -128,6 +148,8 @@ else if (option==1){
    customer();     }
 else printf("wrong input, sorry! run again");
 
+fprintf(filePointer, "%s"," END OF PROGRAM \n");
+fclose(filePointer);
 return 0;
 }
 
@@ -137,51 +159,28 @@ return 0;
 
 
 
-float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall){
+float avg(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall,int a,int b,int c){
+filePointer = fopen("output.txt", "a+") ;
 
-float tdeg,tplas,telec,total;
-int a,b,c,g,x,k,j,i;
-float avg=0;
-tdeg=0;
-x=h;
-k=0;
 
-    for (g=0;g<d;g=g+3){
-  for (i=k;i<h;i++){
-    a=0;
-    a=degrad[i];
-    tdeg+=a;
-}
-k=i;
-h=h+x;
- }
-    tplas=0;
-    k=0;
-    h=x;
-    for( g=1;g<d;g=g+3){
-    for (i=k;i<h;i++){
-     b=0;
-     b=plastic[i];
-     tplas=tplas+b;    }
-k=i;
-h=h+x;
-                      }
-  telec=0;
-  k=0;
-  h=x;
-  for (g=2;g<d;g=g+3){
-   for(i=k;i<h;i++){
-     c=0;
-     c=elec[i];
-    telec=telec+c; }
- k=i;
-h=h+x;
-  }
-  total=tdeg+tplas+telec;
-  avg=total/3;
- finall+=avg;
+float tdeg=0,tplas=0,telec=0,total,avg=0;
+int i;
+for (i=0;i<a;i++){
+    tdeg+=degrad[i];}
+for (i=0;i<b;i++){
+     tplas+=plastic[i]; }
+for(i=0;i<c;i++){
+    telec+=elec[i]; } 
+
+total=tdeg+tplas+telec;
+avg=total/3;
+finall+=avg;
+
 if(area==f+1){
-printf("So Finally, Average waste in all Categories of waste in Municipality for %d days in %d Area/Areas is %.2f kgs",x,f+1,finall);
+printf("So Finally, Average waste in all Categories of waste in Municipality for %d days in %d Area/Areas is %.2f kgs",d,f+1,finall);
+fprintf(filePointer, "%s","Average waste function:\n");
+fprintf(filePointer, "%s %d %s %d %s %f %s", "So Finally, Average waste in all Categories of waste in Municipality for ", d," days in ", f+1," Area/Areas is ",finall," kgs\n");
+return 0;
 }
 return finall;
 }
@@ -191,9 +190,11 @@ return finall;
 
 
 int reward(float degrad[],float plastic[],float elec[],int area,int h,int d,int a,int b,int c){
+  filePointer = fopen("output.txt", "a+") ;
+  fprintf(filePointer, "%s","Rewards function:\n");
 int i,j,k=0;
-float dh[h],ph[h],eh[h];
-float dhd[h],phd[h],ehd[h];
+float dh[a],ph[b],eh[c];
+float dhd[a],phd[b],ehd[c];
 for(i=0;i<h;i++){
   dh[i]=0;
   for(j=k;j<a;j+=h){
@@ -202,6 +203,7 @@ for(i=0;i<h;i++){
 }
 for(int i=0;i<h;i++){
   printf("House %d gives %.2f kgs degradable waste \n",i+1,dh[i]);
+  fprintf(filePointer,"%s %d %s %f %s","House ",i+1," gives ",dh[i],"kgs degradable waste \n");
 }
 float min = dh[0];
 int hn;
@@ -214,7 +216,8 @@ for(i=0;i<h;i++){
         }
     for(i=0;i<h;i++){
       if(min==dhd[i]){
-       printf("The house which gives low quantity of degradable waste is rewarded with badminton kit  house %d with %.2f kgs bio degradable waste\n",i+1,min);
+       printf("The house which gives low quantity of degradable waste is rewarded with badminton kit i.e house %d with %.2f kgs bio degradable waste\n",i+1,min);
+         fprintf(filePointer,"%s %d %s %f %s","The house which gives low quantity of degradable waste is rewarded with badminton kit i.e house ",i+1," with ",min," kgs bio degradable waste \n");
       }
     }
 k=0;
@@ -226,6 +229,7 @@ ph[i]+=plastic[j];
 }
 for(int i=0;i<h;i++){
   printf("House %d gives %.2f kgs plastic waste \n",i+1,ph[i]);
+  fprintf(filePointer,"%s %d %s %f %s","House ",i+1," gives ",ph[i],"kgs plastic waste  \n");
 }
 min = ph[0];
 for(i=0;i<h;i++){
@@ -238,6 +242,7 @@ for(i=0;i<h;i++){
     for(i=0;i<h;i++){
       if(min==phd[i]){
        printf("The house which gives low quantity of plastic waste is rewarded with cricket kit i.e house %d with %.2f kgs plastic waste \n",i+1,min);
+       fprintf(filePointer,"%s %d %s %f %s","The house which gives low quantity of plastic waste is rewarded with cricket kit i.e ",i+1," with ",min," kgs bio degradable waste \n");
       }
     }
 k=0;
@@ -249,6 +254,7 @@ eh[i]+=elec[j];
 }
 for(int i=0;i<h;i++){
   printf("House %d gives %.2f kgs electronic waste \n",i+1,eh[i]);
+    fprintf(filePointer,"%s %d %s %f %s","House ",i+1," gives ",eh[i],"kgs electronic waste \n");
 }
 min = eh[0];
 for(i=0;i<h;i++){
@@ -261,101 +267,51 @@ for(i=0;i<h;i++){
     for(i=0;i<h;i++){
       if(min==ehd[i]){
        printf("The house which gives low quantity of electronic waste is rewarded with footbal kit i.e house %d with %.2f kgs electronic waste",i+1,min);
+              fprintf(filePointer,"%s %d %s %f %s","The house which gives low quantity of electronic waste is rewarded with footbal kit i.e house ",i+1," with ",min," kgs electronic waste \n");
       }
     }
 return 0;
 }
 
 
-float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float finall){
+float earn(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,int a,int b,int c){
 
-float tdeg,tplas,telec,total;
-int a,b,c,g,x,k,j,i;
-tdeg=0;
-x=h;
-k=0;
+  filePointer = fopen("output.txt", "a+") ;
 
-    for (g=0;g<d;g=g+3){
-  for (i=k;i<h;i++){
-    a=0;
-    a=degrad[i];
-    a=a*5;
-    tdeg=tdeg+a;
-}
-k=i;
-h=h+x;
- }
-    tplas=0;
-    k=0;
-    h=x;
-    for(g=1;g<d;g=g+3){
-    for (i=k;i<h;i++){
-     b=0;
-     b=plastic[i];
-     b=b*10;
-     tplas=tplas+b;    }
-k=i;
-h=h+x;
-                      }
-  telec=0;
-  k=0;
-  h=x;
-  for (g=2;g<d;g=g+3){
-   for(i=k;i<h;i++){
-     c=0;
-     c=elec[i];
-     c=c*15;
-    telec=telec+c; }
-     k=0;
-     h=x;
-  }
-  total=tdeg+tplas+telec;
- finall+=total;
+static float finall;
+float tdeg=0,tplas=0,telec=0,total;
+int i;
+
+for (i=0;i<a;i++){
+    tdeg+=degrad[i]*5;}
+for (i=0;i<b;i++){
+     tplas+=plastic[i]*10; }
+for(i=0;i<c;i++){
+    telec+=elec[i]*15; }    
+total=tdeg+tplas+telec;
+finall+=total;
 if(area==f+1){
 printf("So Finally, Total Earnings of the Municipality for %d days in %d Area/Areas is ₹%.2f ",d,f+1,finall);
+fprintf(filePointer, "%s","Earings function:\n");
+fprintf(filePointer, "%s %d %s %d %s %f\n", "So Finally, Total Earnings of the Municipality for ", d," days in ", f+1," Area/Areas is ₹",finall);
 }
-return finall;
+return 0;
 }
 
 
-int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal){
+int percentage(float degrad[],float plastic[],float elec[],int area,int h,int d,int f,float *td,float *tp,float *te,float *ptotal,int a,int b,int c){
 
-float tdeg,tplas,telec,total;
-int a,b,c,g,x,k,j,i;
-tdeg=0;
-x=h;
-k=0;
+filePointer = fopen("output.txt", "a+") ;
 
-for (g=0;g<d;g=g+3)     {
-  for (i=k;i<h;i++){
-    a=0;
-    a=degrad[i];
-    tdeg=tdeg+a; }
-  k=i;
-  h=h+x;
-                         }
-tplas=0;
-k=0;
-h=x;
-for(g=1;g<d;g=g+3)        {
-  for ( i=k;i<h;i++){
-     b=0;
-     b=plastic[i];
-     tplas=tplas+b;  }
-  k=i;
-  h=h+x;
-                          }
-telec=0;
-k=0;
-h=x;
-for ( g=2;g<d;g=g+3)      {
-  for( i=k;i<h;i++){
-     c=0;
-     c=elec[i];
-    telec=telec+c;  }
-  k=i;
-  h=h+x;
-                          }
+float tdeg=0,tplas=0,telec=0,total;
+int i;
+for (i=0;i<a;i++){
+    tdeg+=degrad[i];}
+for (i=0;i<b;i++){
+     tplas+=plastic[i]; }
+for(i=0;i<c;i++){
+    telec+=elec[i]; } 
+
 total=tdeg+tplas+telec;
 *td+=tdeg;
 *tp+=tplas;
@@ -371,63 +327,43 @@ if(area==f+1)             {
  printf("%.2f %% is from degradable waste category\n",*td);
  printf("%.2f %% is from plastic waste category\n",*tp);
  printf("%.2f %% is from electronic waste category\n",*te);
+
+fprintf(filePointer, "%s %d %s","percentage function in area",f+1," :\n");
+fprintf(filePointer, "%s %f %s", "total wastage is ",*ptotal ,"KGS\n");
+fprintf(filePointer, "%f %s",*td ," %% is from degradable waste category\n");
+fprintf(filePointer, "%f %s",*tp ," %% is from plastic waste category\n");
+fprintf(filePointer, "%f %s",*te ," %% is from electronic waste category\n");
                           }
 return 0;
 }
 
-
-
 int customer(){
-int d,j,k,g,i;
+  filePointer = fopen("output.txt", "a+") ;
+  fprintf(filePointer, "%s","customer function:");
+int d,g;
 printf("Please enter the no of days to be calculated:");
 scanf("%d", &d);
 float arr[d];
-
+float tdeg=0,tplas=0,telec=0,total;
 for (g=0;g<d;g=g+3){
    printf("enter the quantity of degradable waste in kg on day %d:",g+1);
    scanf("%f",&arr[g]);
+   tdeg+=(arr[g]*5);
 }
 
 for(g=1;g<d;g=g+3){
     printf("enter the quantity of plastic waste in kg on day %d:",g+1);
     scanf("%f",&arr[g]);
+    tplas=(arr[g]*10);
  }
   for (g=2;g<d;g=g+3){
     printf("enter the quantity of electronic waste in kg on day %d:",g+1);
     scanf("%f",&arr[g]);
+    telec+=(arr[g]*15);
   }
-//calculation part
-
-float tdeg,tplas,telec,total,finall;
-int a,b,c;
-tdeg=0;
-
-for (g=0;g<d;g=g+3){
-     a=0;
-     a=arr[g];
-     a=a*5;
-     tdeg=tdeg+a; }
-
-tplas=0;
-
-for(g=1;g<d;g=g+3){
-     b=0;
-     b=arr[g];
-     b=b*10;
-     tplas=tplas+b;  }
-
-telec=0;
-
-for (g=2;g<d;g=g+3){
-     c=0;
-     c=arr[g];
-     c=c*15;
-    telec=telec+c; }
 
 total=tdeg+tplas+telec;
-finall+=total;
-
-printf("Total expenditure on waste management for %d days is ₹%.2f",d,finall);
-
+printf("Total expenditure on waste management for %d days is ₹%.2f",d,total);
+fprintf(filePointer, "Total expenditure on waste management for %d days is ₹ %f\n",d,total);
   return 0;
 }
